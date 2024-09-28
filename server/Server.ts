@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import { Globals } from '../library/Globals/Globals';
 import { LoggerUtils } from '../library/Utilities/LoggerUtils';
+import { HttpStatusCode } from 'axios';
 
 export class Server {
   private readonly app: Application;
@@ -20,7 +21,7 @@ export class Server {
 
   private configureRoutes(): void {
     this.app.get('/helloworld', (req: Request, res: Response) => {
-      res.status(200).send('Hello, World!');
+      res.status(HttpStatusCode.Ok).send('Hello, World!');
     });
   }
 
