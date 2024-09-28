@@ -2,6 +2,8 @@ import express, { Application, Request, Response } from 'express';
 import { Globals } from '../library/Globals/Globals';
 import { LoggerUtils } from '../library/Utilities/LoggerUtils';
 import microAidRoutes from './routes/microAidRoutes';
+import authRoutes from './routes/authRoutes'; // Import auth routes
+
 
 export class Server {
   private readonly app: Application;
@@ -26,6 +28,9 @@ export class Server {
 
     // Use the micro-aid routes defined in microAidRoutes.ts
     this.app.use('/api/microaid', microAidRoutes);
+
+    this.app.use('/api/auth', authRoutes); // Link to authentication routes
+
   }
 
   public start(): void {

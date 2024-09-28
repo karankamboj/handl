@@ -2,7 +2,7 @@ interface MicroAidRequest {
     id: string;
     description: string;
     location: string;
-    userId: string;
+    username: string;
     status: 'pending' | 'accepted';
     volunteerId?: string;
   }

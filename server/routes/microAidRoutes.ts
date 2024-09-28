@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createRequest, getRequests, acceptRequest } from '../controllers/microAidController';
+import { createRequest, getRequests, getUserRequests, acceptRequest } from '../controllers/microAidController';
 
 const router = Router();
 
@@ -8,6 +8,8 @@ router.post('/request', createRequest);
 
 // Endpoint to get all micro-aid requests
 router.get('/request', getRequests);
+
+router.get('/request/:username', getUserRequests);
 
 // Endpoint to accept a micro-aid request
 router.post('/request/:id/accept', acceptRequest);

@@ -3,8 +3,8 @@ import { addRequest, getAllRequests, acceptAidRequest } from '../services/microA
 
 // Controller to handle creating a new micro-aid request
 export const createRequest = (req: Request, res: Response) => {
-  const { description, location, userId } = req.body; // Input from the request body
-  const newRequest = addRequest({ description, location, userId });
+  const { description, location, username } = req.body; // Input from the request body
+  const newRequest = addRequest({ description, location, username });
   res.status(201).json(newRequest);
 };
 
@@ -12,6 +12,18 @@ export const createRequest = (req: Request, res: Response) => {
 export const getRequests = (req: Request, res: Response) => {
   const requests = getAllRequests();
   res.json(requests);
+};
+
+// Controller to handle retrieving requests for a particular user
+export const getUserRequests = (req: Request, res: Response) => {
+  const { username } = req.params;
+  const userRequests = getAllRequests().filter(req => req.username === username); // Filter requests by username
+
+  if (userRequests.length === 0) {
+    return res.status(404).json({ message: 'No requests found for this user.' });
+  }
+
+  res.status(200).json(userRequests); // Return the filtered requests
 };
 
 // Controller to handle accepting a micro-aid request
