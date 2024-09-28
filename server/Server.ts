@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import { Globals } from '../library/Globals/Globals';
 import { LoggerUtils } from '../library/Utilities/LoggerUtils';
+import microAidRoutes from './routes/microAidRoutes';
 
 export class Server {
   private readonly app: Application;
@@ -18,10 +19,13 @@ export class Server {
     this.app.use(express.json());
   }
 
-  private configureRoutes(): void {
+  private configureRoutes(): void { 
     this.app.get('/helloworld', (req: Request, res: Response) => {
       res.status(200).send('Hello, World!');
     });
+
+    // Use the micro-aid routes defined in microAidRoutes.ts
+    this.app.use('/api/microaid', microAidRoutes);
   }
 
   public start(): void {
