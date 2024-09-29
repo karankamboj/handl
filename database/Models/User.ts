@@ -3,7 +3,7 @@ import { IRequest } from './Request';
 import { ISkill } from './Skills';
 
 export interface IUser {
-  _id: Types.ObjectId;
+  _id: Types.ObjectId | string;
   username: string;
   name: string;
   email: string;

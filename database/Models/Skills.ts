@@ -1,7 +1,7 @@
 import mongoose, { Types } from 'mongoose';
 
 export interface ISkill {
-  _id: Types.ObjectId;
+  _id: Types.ObjectId | string;
   name: string;
 }
 

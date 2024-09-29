@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Globals } from '../library/Globals/Globals';
 import { LoggerUtils } from '../library/Utilities/LoggerUtils';
-import { DatabaseConnectionFailure } from '../library/Errors/Database';
+import { DBConnectionFailure } from '../library/Errors/Database';
 import { ErrorUtils } from '../library/Utilities/ErrorUtils';
 
 export class Database {
@@ -25,7 +25,7 @@ export class Database {
         ErrorUtils.throwCustomError(
           error,
           'Could not connect to MongoDB',
-          DatabaseConnectionFailure
+          DBConnectionFailure
         );
       });
   }

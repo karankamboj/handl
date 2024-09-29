@@ -2,11 +2,11 @@ import { HttpStatusCode } from 'axios';
 import { BaseError, ErrorResponse } from '../Interfaces/Errors';
 
 // Errors
-export class DatabaseConnectionFailure extends BaseError {}
-export class DatabaseError extends BaseError {}
+export class DBConnectionFailure extends BaseError {}
+export class DBError extends BaseError {}
 
 // Responses
-export class DatabaseConnectionFailureResponse extends ErrorResponse {
+export class DBConnectionFailureRes extends ErrorResponse {
   constructor() {
     super();
 
@@ -18,7 +18,7 @@ export class DatabaseConnectionFailureResponse extends ErrorResponse {
   }
 }
 
-export class DatabaseErrorResponse extends ErrorResponse {
+export class DBErrorRes extends ErrorResponse {
   constructor() {
     super();
 
