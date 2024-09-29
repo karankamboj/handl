@@ -1,4 +1,3 @@
-// src/pages/auth.tsx
 import { useState, FormEvent } from 'react';
 import { auth } from '../firebase/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
@@ -11,6 +10,14 @@ const AuthPage: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [isLogin, setIsLogin] = useState<boolean>(true); // Toggle between login and signup
   const router = useRouter();
+
+  // Function to fetch email by username
+  const fetchEmailByUsername = async (username: string): Promise<string> => {
+    // Replace this with your actual API call to fetch the email by username
+    // const response = await axios.get(`/api/getEmailByUsername?username=${username}`);
+    // return response.data.email;
+    return username;
+  };
 
   // Handle user registration
   const handleSignUp = async (e: FormEvent) => {
@@ -39,12 +46,10 @@ const AuthPage: React.FC = () => {
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     try {
+      // Fetch the email associated with the username
+      const email = await fetchEmailByUsername(username);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('User logged in:', userCredential.user);
-
-      // Fetch username from the server or set it directly if available
-      // const response = await axios.get(`/api/user?email=${email}`);
-      // const fetchedUsername = response.data.username;
 
       // Redirect to dashboard with username in query parameters
       router.push({
@@ -60,22 +65,22 @@ const AuthPage: React.FC = () => {
     <div className="auth-page">
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
       <form onSubmit={isLogin ? handleLogin : handleSignUp}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
         {!isLogin && (
           <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         )}
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
         <input
           type="password"
           placeholder="Password"

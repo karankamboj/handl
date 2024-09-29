@@ -149,6 +149,7 @@ const Dashboard: React.FC = () => {
           </div>
         )}
       </main>
+      {/* <p style={{ color: 'white' }}>{username}</p> */}
     </div>
   );
 };
