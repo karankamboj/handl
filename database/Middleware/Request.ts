@@ -39,15 +39,13 @@ export class RequestCRUD {
   }
 
   @DBCatchable('Error getting requests by user')
-  public static async getRequestsByUser(username: string): Promise<IRequest[]> {
-    return await Request.find({ createdBy: username });
+  public static async getRequestsByUser(userId: string): Promise<IRequest[]> {
+    return await Request.find({ createdBy: userId });
   }
 
   @DBCatchable('Error getting requests for user')
-  public static async getRequestsForUser(
-    username: string
-  ): Promise<IRequest[]> {
-    return await Request.find({ createdFor: username });
+  public static async getRequestsForUser(userId: string): Promise<IRequest[]> {
+    return await Request.find({ createdFor: userId });
   }
 
   @DBCatchable('Error getting requests by status')

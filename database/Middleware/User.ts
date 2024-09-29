@@ -1,8 +1,7 @@
 import { DBCatchable } from '../../library/Decorators/DBCatchable';
 import { Nullish } from '../../library/Types';
 import { ISkill } from '../Models/Skills';
-import { INewUser, IUser } from '../Models/User';
-import User from '../Models/User';
+import User, { INewUser, IUser } from '../Models/User';
 
 export class UserCRUD {
   @DBCatchable('Error creating user')
@@ -13,6 +12,16 @@ export class UserCRUD {
     };
 
     return await User.create(newUserDate);
+  }
+
+  public static async userExists(username: string): Promise<boolean> {
+    const user = await User.exists({ username });
+
+    if (user) {
+      return true;
+    }
+
+    return false;
   }
 
   @DBCatchable('Error getting user by username')
@@ -30,7 +39,7 @@ export class UserCRUD {
   @DBCatchable('Error getting all users')
   public static async getAllUsers(populate: boolean = false): Promise<IUser[]> {
     if (populate) {
-      const users = await User.find().populate('skills').populate('requests');
+      const users = await User.find().populate('skills');
       users.map((user) => {
         user.skills?.map((skill) => skill.name);
       });
@@ -71,16 +80,6 @@ export class UserCRUD {
     );
 
     return user;
-  }
-
-  @DBCatchable('Error getting user requests')
-  public static async getUserRequests(
-    username: string
-  ): Promise<Nullish<IUser>> {
-    const userWithRequests = await User.findOne({ username }).populate(
-      'requests'
-    );
-    return userWithRequests;
   }
 
   @DBCatchable('Error setting user requests')

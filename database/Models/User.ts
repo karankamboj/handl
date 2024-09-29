@@ -1,5 +1,4 @@
 import mongoose, { Types } from 'mongoose';
-import { IRequest } from './Request';
 import { ISkill } from './Skills';
 
 export interface IUser {
@@ -9,7 +8,6 @@ export interface IUser {
   email: string;
   createdAt: number;
   skills?: ISkill[];
-  requests?: IRequest[];
 }
 
 export type INewUser = Pick<IUser, 'username' | 'name' | 'email'>;
@@ -37,13 +35,6 @@ const UserSchema = new mongoose.Schema<IUser>({
     {
       type: Types.ObjectId,
       ref: 'skills',
-      default: []
-    }
-  ],
-  requests: [
-    {
-      type: Types.ObjectId,
-      ref: 'requests',
       default: []
     }
   ]

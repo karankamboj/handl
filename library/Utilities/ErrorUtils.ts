@@ -5,6 +5,13 @@ import {
   DBErrorRes
 } from '../Errors/Database';
 import { CouldNotSendEmail, CouldNotSendEmailRes } from '../Errors/Email';
+import { MissingHeaders, MissingParamsRes } from '../Errors/Params';
+import {
+  UserAlreadyExists,
+  UserAlreadyExistsRes,
+  UserDoesNotExist,
+  UserDoesNotExistRes
+} from '../Errors/User';
 import { ErrorResponse } from '../Interfaces/Errors';
 import { LoggerUtils } from './LoggerUtils';
 
@@ -26,7 +33,13 @@ export class ErrorUtils {
   private static errorResMap = new Map<string, (error: any) => ErrorResponse>([
     [DBConnectionFailure.name, () => new DBConnectionFailureRes()],
     [DBError.name, () => new DBErrorRes()],
-    [CouldNotSendEmail.name, () => new CouldNotSendEmailRes()]
+    [CouldNotSendEmail.name, () => new CouldNotSendEmailRes()],
+    [
+      MissingHeaders.name,
+      (error: MissingHeaders) => new MissingParamsRes(error.missingHeaders)
+    ],
+    [UserDoesNotExist.name, () => new UserDoesNotExistRes()],
+    [UserAlreadyExists.name, () => new UserAlreadyExistsRes()]
   ]);
 
   public static getErrorRes(

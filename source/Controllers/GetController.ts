@@ -4,6 +4,9 @@ import {
   ServerEvent
 } from '../../library/Interfaces/HandlerController';
 import { ValidRoutes } from '../../server/ValidRoutes';
+import { GetReceivedRequests } from '../Handlers/GetHandlers/GetRecievedRequests';
+import { GetSentRequests } from '../Handlers/GetHandlers/GetSentRequests';
+import { GetSkills } from '../Handlers/GetHandlers/GetSkills';
 import { GetUsers } from '../Handlers/GetHandlers/GetUsers';
 
 export class GetController extends Controller<ServerEvent> {
@@ -17,14 +20,11 @@ export class GetController extends Controller<ServerEvent> {
   protected resolve(): HandlerController<ServerEvent> | null {
     switch (this.routeId) {
       case ValidRoutes.GetSentRequests:
-        // Return specific handler or controller for GetSentRequests
-        return null; // Placeholder
+        return new GetSentRequests(this.trigger);
       case ValidRoutes.GetReceivedRequests:
-        // Return specific handler or controller for GetReceivedRequests
-        return null; // Placeholder
+        return new GetReceivedRequests(this.trigger);
       case ValidRoutes.GetSkills:
-        // Return specific handler or controller for GetSkills
-        return null; // Placeholder
+        return new GetSkills(this.trigger);
       case ValidRoutes.GetUsers:
         return new GetUsers(this.trigger);
       default:
