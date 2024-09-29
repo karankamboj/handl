@@ -2,12 +2,12 @@ import mongoose, { Types } from 'mongoose';
 import { RequestStatus } from '../../library/Validators/Request';
 
 export interface IRequest {
-  _id: Types.ObjectId;
+  _id: Types.ObjectId | string;
   title: string;
   description: string;
   status: string;
-  createdBy: Types.ObjectId;
-  createdFor: Types.ObjectId;
+  createdBy: Types.ObjectId | string;
+  createdFor: Types.ObjectId | string;
   creationDate: number;
   acceptanceDate: number;
 }

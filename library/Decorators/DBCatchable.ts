@@ -1,5 +1,5 @@
 import { ErrorUtils } from '../Utilities/ErrorUtils';
-import { DatabaseError } from '../Errors/Database';
+import { DBError } from '../Errors/Database';
 
 export function DBCatchable<T>(errorMessage: string) {
   return function (
@@ -17,7 +17,7 @@ export function DBCatchable<T>(errorMessage: string) {
       try {
         return await originalMethod.apply(this, args);
       } catch (error) {
-        ErrorUtils.throwCustomError(error, errorMessage, DatabaseError);
+        ErrorUtils.throwCustomError(error, errorMessage, DBError);
       }
     };
   };
