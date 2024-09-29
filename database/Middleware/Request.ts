@@ -2,7 +2,8 @@
 import { DBCatchable } from '../../library/Decorators/DBCatchable';
 import { Nullish } from '../../library/Types';
 import { RequestStatus } from '../../library/Validators/Request';
-import { INewRequest, IRequest, Request } from '../Models/Request';
+import { INewRequest, IRequest } from '../Models/Request';
+import Request from '../Models/Request';
 
 export class RequestCRUD {
   @DBCatchable('Error creating request')
@@ -16,7 +17,7 @@ export class RequestCRUD {
 
   @DBCatchable('Error getting request by ID')
   public static async getRequestById(id: string): Promise<Nullish<IRequest>> {
-    return await Request.findById(id);
+    return await Request.findById(id).populate('users');
   }
 
   @DBCatchable('Error updating request')

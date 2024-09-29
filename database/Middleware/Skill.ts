@@ -1,5 +1,6 @@
 import { DBCatchable } from '../../library/Decorators/DBCatchable';
-import { INewSkill, ISkill, Skill } from '../Models/Skills';
+import { INewSkill, ISkill } from '../Models/Skills';
+import Skill from '../Models/Skills';
 
 export class SkillCRUD {
   @DBCatchable('Error creating skill')
@@ -24,11 +25,6 @@ export class SkillCRUD {
 
   @DBCatchable('Error getting all skills')
   public static async getAllSkills(): Promise<ISkill[]> {
-    const skills = await Skill.find();
-
-    return skills.map((skill) => ({
-      ...skill,
-      _id: skill._id.toString()
-    }));
+    return await Skill.find();
   }
 }

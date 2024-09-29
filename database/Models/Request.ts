@@ -33,10 +33,12 @@ const RequestSchema = new mongoose.Schema<IRequest>({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'users',
     required: true
   },
   createdFor: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'users',
     required: true
   },
   creationDate: {
@@ -49,4 +51,5 @@ const RequestSchema = new mongoose.Schema<IRequest>({
   }
 });
 
-export const Request = mongoose.model<IRequest>('requests', RequestSchema);
+const Request = mongoose.model<IRequest>('requests', RequestSchema);
+export default Request;

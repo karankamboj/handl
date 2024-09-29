@@ -1,7 +1,8 @@
 import { DBCatchable } from '../../library/Decorators/DBCatchable';
 import { Nullish } from '../../library/Types';
 import { ISkill } from '../Models/Skills';
-import { INewUser, IUser, User } from '../Models/User';
+import { INewUser, IUser } from '../Models/User';
+import User from '../Models/User';
 
 export class UserCRUD {
   @DBCatchable('Error creating user')
@@ -27,7 +28,15 @@ export class UserCRUD {
   }
 
   @DBCatchable('Error getting all users')
-  public static async getAllUsers(): Promise<IUser[]> {
+  public static async getAllUsers(populate: boolean = false): Promise<IUser[]> {
+    if (populate) {
+      const users = await User.find().populate('skills').populate('requests');
+      users.map((user) => {
+        user.skills?.map((skill) => skill.name);
+      });
+      return users;
+    }
+
     return await User.find();
   }
 
@@ -53,7 +62,7 @@ export class UserCRUD {
   @DBCatchable('Error setting user skills')
   public static async setUserSkills(
     username: string,
-    skill: unknown[]
+    skill: string[]
   ): Promise<IUser> {
     const user = await User.findOneAndUpdate(
       { username },

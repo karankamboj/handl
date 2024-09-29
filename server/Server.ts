@@ -1,11 +1,11 @@
 import express, { Application, Request, Response } from 'express';
 import { Globals } from '../library/Globals/Globals';
 import { LoggerUtils } from '../library/Utilities/LoggerUtils';
-import microAidRoutes from './routes/microAidRoutes';
-import authRoutes from './routes/authRoutes'; // Import auth routes
-import emailRoutes from './routes/emailRoutes';
 
 import { HttpStatusCode } from 'axios';
+import { GetRouter } from './Routes/Get';
+import { PostRouter } from './Routes/Post';
+import { PutRouter } from './Routes/Update';
 
 export class Server {
   private readonly app: Application;
@@ -23,19 +23,16 @@ export class Server {
     this.app.use(express.json());
   }
 
-  private configureRoutes(): void { 
+  private configureRoutes(): void {
     this.app.get('/helloworld', (req: Request, res: Response) => {
-      res.status(HttpStatusCode.Ok).send('Hello, World!');
+      res.status(HttpStatusCode.Ok).send({ message: 'Hello World' });
     });
 
-    // Use the micro-aid routes defined in microAidRoutes.ts
-    this.app.use('/api/microaid', microAidRoutes);
+    this.app.use('/api', new GetRouter().router);
 
-    this.app.use('/api/auth', authRoutes); // Link to authentication routes
+    this.app.use('/api', new PostRouter().router);
 
-    // Use the email routes under /api/email
-    this.app.use('/api/email', emailRoutes);
-
+    this.app.use('/api', new PutRouter().router);
   }
 
   public start(): void {

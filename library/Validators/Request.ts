@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
 export enum RequestStatus {
-  PENDING = 'PENDING',
-  ACCEPTED = 'ACCEPTED',
-  DENIED = 'DENIED'
+  PENDING = 'pending',
+  ACCEPTED = 'accepted',
+  DENIED = 'denied'
 }
 
 export class RequestValidator {

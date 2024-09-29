@@ -4,6 +4,7 @@ import {
   DBError,
   DBErrorRes
 } from '../Errors/Database';
+import { CouldNotSendEmail, CouldNotSendEmailRes } from '../Errors/Email';
 import { ErrorResponse } from '../Interfaces/Errors';
 import { LoggerUtils } from './LoggerUtils';
 
@@ -24,10 +25,11 @@ class GenericErrorResponse extends ErrorResponse {
 export class ErrorUtils {
   private static errorResMap = new Map<string, (error: any) => ErrorResponse>([
     [DBConnectionFailure.name, () => new DBConnectionFailureRes()],
-    [DBError.name, () => new DBErrorRes()]
+    [DBError.name, () => new DBErrorRes()],
+    [CouldNotSendEmail.name, () => new CouldNotSendEmailRes()]
   ]);
 
-  public static getErrorEmbed(
+  public static getErrorRes(
     error: unknown,
     showError?: boolean
   ): ErrorResponse {

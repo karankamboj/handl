@@ -1,8 +1,12 @@
+import { Database } from './database/Database';
 import { Server } from './server/Server';
 
-function main() {
+async function main() {
   const server = new Server();
   server.start();
+
+  const db = new Database();
+  await db.connect();
 }
 
-main();
+main().catch((error) => console.error(error));

@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
+import { ValidRoutes } from '../../server/ValidRoutes';
 
 export type ServerEvent = {
   req: Request;
   res: Response;
+  route: ValidRoutes;
 };
 
 export type ValidEventTypes = ServerEvent;
@@ -16,7 +18,7 @@ export interface IHasChecks {
 interface IHandlerWithChecks extends IHasChecks, IHandler {}
 
 /**
- * All interactions with the bot defined in ValidEventTypes that have been routed via a Controller must extend Handler so they are automatically processed.
+ * All interactions with the bot defined in ValidEventTypes that have been routed via a Controller must extend Handler so they are automatically processed. Always remember to add \@Catchable above the execute method to catch any errors that may occur.
  * This class implements ICheckable when the decorator Checkable is used on the class.
  * @implements IHandler
  * @template T - A type that extends one of the ValidEventTypes. Can add more types to the ValidEventTypes union type if needed.
