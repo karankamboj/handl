@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { registerUser, loginUser } from '../controllers/authController';
+import { registerUser, loginUser, fetchUserSkills } from '../controllers/authController';
 
 const router = Router();
 
@@ -8,5 +8,8 @@ router.post('/register', registerUser);
 
 // Route for user login
 router.post('/login', loginUser);
+
+router.get('/skills/:username', fetchUserSkills); // Add route for fetching user skills
+
 
 export default router;
