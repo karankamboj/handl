@@ -7,7 +7,7 @@ import { LoggerUtils } from '../library/Utilities/LoggerUtils';
 import { HttpStatusCode } from 'axios';
 import { GetRouter } from './Routes/Get';
 import { PostRouter } from './Routes/Post';
-import { PutRouter } from './Routes/Update';
+import { PutRouter } from './Routes/Put';
 
 export class Server {
   private readonly app: Application;
