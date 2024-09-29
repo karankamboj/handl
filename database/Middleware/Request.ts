@@ -10,7 +10,8 @@ export class RequestCRUD {
   public static async createRequest(request: INewRequest): Promise<IRequest> {
     const newRequestData = {
       ...request,
-      creationDate: new Date().getTime()
+      creationDate: new Date().getTime(),
+      status: RequestStatus.PENDING
     };
     return await Request.create(newRequestData);
   }

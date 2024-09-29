@@ -27,4 +27,11 @@ export class SkillCRUD {
   public static async getAllSkills(): Promise<ISkill[]> {
     return await Skill.find();
   }
+
+  @DBCatchable('Error getting skill by name')
+  public static async skillExists(skill: string): Promise<boolean> {
+    const skillExists = await Skill.exists({ name: skill });
+
+    return !!skillExists;
+  }
 }

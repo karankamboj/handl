@@ -4,6 +4,9 @@ import {
   HandlerController
 } from '../../library/Interfaces/HandlerController';
 import { ValidRoutes } from '../../server/ValidRoutes';
+import { AcceptRequest } from '../Handlers/PutHandlers/AcceptRequest';
+import { DenyRequest } from '../Handlers/PutHandlers/DenyRequest';
+import { UpdateUser } from '../Handlers/PutHandlers/UpdateUser';
 
 export class UpdateController extends Controller<ServerEvent> {
   private routeId: ValidRoutes;
@@ -16,14 +19,11 @@ export class UpdateController extends Controller<ServerEvent> {
   protected resolve(): HandlerController<ServerEvent> | null {
     switch (this.routeId) {
       case ValidRoutes.UpdateUser:
-        // Return specific handler or controller for UpdateUser
-        return null; // Placeholder
+        return new UpdateUser(this.trigger);
       case ValidRoutes.AcceptRequest:
-        // Return specific handler or controller for AcceptRequest
-        return null; // Placeholder
+        return new AcceptRequest(this.trigger);
       case ValidRoutes.DenyRequest:
-        // Return specific handler or controller for DenyRequest
-        return null; // Placeholder
+        return new DenyRequest(this.trigger);
       default:
         return null;
     }

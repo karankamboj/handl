@@ -5,12 +5,33 @@ import {
   DBErrorRes
 } from '../Errors/Database';
 import { CouldNotSendEmail, CouldNotSendEmailRes } from '../Errors/Email';
-import { MissingHeaders, MissingParamsRes } from '../Errors/Params';
 import {
+  MissingBody,
+  MissingBodyRes,
+  MissingHeaders,
+  MissingParamsRes
+} from '../Errors/Params';
+import {
+  InvalidSkill,
+  InvalidSkillRes,
+  SkillExists,
+  SkillExistsRes
+} from '../Errors/Skill';
+import {
+  EmailExists,
+  EmailExistsRes,
+  InvalidEmail,
+  InvalidEmailRes,
+  InvalidName,
+  InvalidNameRes,
+  InvalidUsername,
+  InvalidUsernameRes,
   UserAlreadyExists,
   UserAlreadyExistsRes,
   UserDoesNotExist,
-  UserDoesNotExistRes
+  UserDoesNotExistRes,
+  UsernameExists,
+  UsernameExistsRes
 } from '../Errors/User';
 import { ErrorResponse } from '../Interfaces/Errors';
 import { LoggerUtils } from './LoggerUtils';
@@ -38,8 +59,19 @@ export class ErrorUtils {
       MissingHeaders.name,
       (error: MissingHeaders) => new MissingParamsRes(error.missingHeaders)
     ],
+    [
+      MissingBody.name,
+      (error: MissingBody) => new MissingBodyRes(error.missingBody)
+    ],
     [UserDoesNotExist.name, () => new UserDoesNotExistRes()],
-    [UserAlreadyExists.name, () => new UserAlreadyExistsRes()]
+    [UserAlreadyExists.name, () => new UserAlreadyExistsRes()],
+    [InvalidUsername.name, () => new InvalidUsernameRes()],
+    [UsernameExists.name, () => new UsernameExistsRes()],
+    [EmailExists.name, () => new EmailExistsRes()],
+    [InvalidEmail.name, () => new InvalidEmailRes()],
+    [InvalidName.name, () => new InvalidNameRes()],
+    [SkillExists.name, () => new SkillExistsRes()],
+    [InvalidSkill.name, () => new InvalidSkillRes()]
   ]);
 
   public static getErrorRes(

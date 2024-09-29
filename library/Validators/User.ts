@@ -2,11 +2,16 @@ import { z } from 'zod';
 
 export class UserValidator {
   public static Email = z.string().email();
-  public static Password = z
+
+  public static Username = z
     .string()
-    .min(8)
-    .max(32)
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/
-    );
+    .min(3)
+    .max(30)
+    .regex(/^[a-zA-Z0-9_]{3,30}$/);
+
+  public static Name = z
+    .string()
+    .regex(/^[a-zA-Z ]+$/)
+    .min(3)
+    .max(50);
 }

@@ -14,7 +14,7 @@ export interface IRequest {
 
 export type INewRequest = Pick<
   IRequest,
-  'title' | 'description' | 'status' | 'createdBy' | 'createdFor'
+  'title' | 'description' | 'createdBy' | 'createdFor'
 >;
 
 const RequestSchema = new mongoose.Schema<IRequest>({

@@ -11,6 +11,9 @@ export interface IUser {
 }
 
 export type INewUser = Pick<IUser, 'username' | 'name' | 'email'>;
+export type IUpdateUser = Partial<
+  Pick<IUser, 'name' | 'username'> & { skills: string[] }
+>;
 
 const UserSchema = new mongoose.Schema<IUser>({
   username: {

@@ -1,7 +1,7 @@
 import { DBCatchable } from '../../library/Decorators/DBCatchable';
 import { Nullish } from '../../library/Types';
 import { ISkill } from '../Models/Skills';
-import User, { INewUser, IUser } from '../Models/User';
+import User, { INewUser, IUpdateUser, IUser } from '../Models/User';
 
 export class UserCRUD {
   @DBCatchable('Error creating user')
@@ -16,6 +16,16 @@ export class UserCRUD {
 
   public static async userExists(username: string): Promise<boolean> {
     const user = await User.exists({ username });
+
+    if (user) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public static async emailExists(email: string): Promise<boolean> {
+    const user = await User.exists({ email });
 
     if (user) {
       return true;
@@ -52,7 +62,7 @@ export class UserCRUD {
   @DBCatchable('Error updating user')
   public static async updateUser(
     username: string,
-    updateData: Partial<IUser>
+    updateData: IUpdateUser
   ): Promise<Nullish<IUser>> {
     return await User.findOneAndUpdate({ username }, updateData, { new: true });
   }

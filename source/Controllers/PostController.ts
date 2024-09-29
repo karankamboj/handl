@@ -4,6 +4,9 @@ import {
   HandlerController
 } from '../../library/Interfaces/HandlerController';
 import { ValidRoutes } from '../../server/ValidRoutes';
+import { CreateRequest } from '../Handlers/PostHandlers/CreateRequest';
+import { CreateSkill } from '../Handlers/PostHandlers/CreateSkill';
+import { CreateUser } from '../Handlers/PostHandlers/CreateUser';
 
 export class PostController extends Controller<ServerEvent> {
   private routeId: ValidRoutes;
@@ -16,14 +19,11 @@ export class PostController extends Controller<ServerEvent> {
   protected resolve(): HandlerController<ServerEvent> | null {
     switch (this.routeId) {
       case ValidRoutes.CreateRequest:
-        // Return specific handler or controller for SubmitNewRequest
-        return null; // Placeholder
+        return new CreateRequest(this.trigger);
       case ValidRoutes.CreateSkill:
-        // Return specific handler or controller for AddNewSkill
-        return null; // Placeholder
+        return new CreateSkill(this.trigger);
       case ValidRoutes.CreateUser:
-        // Return specific handler or controller for CreateUser
-        return null; // Placeholder
+        return new CreateUser(this.trigger);
       default:
         return null;
     }

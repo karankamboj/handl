@@ -23,6 +23,7 @@ export function Catchable(log?: boolean) {
       try {
         await originalMethod.apply(this, args);
       } catch (error) {
+        this.errored = true;
         if (log) {
           console.error(error);
         }
