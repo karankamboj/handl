@@ -5,6 +5,7 @@ import microAidRoutes from './routes/microAidRoutes';
 import authRoutes from './routes/authRoutes'; // Import auth routes
 import emailRoutes from './routes/emailRoutes';
 
+import { HttpStatusCode } from 'axios';
 
 export class Server {
   private readonly app: Application;
@@ -24,7 +25,7 @@ export class Server {
 
   private configureRoutes(): void { 
     this.app.get('/helloworld', (req: Request, res: Response) => {
-      res.status(200).send('Hello, World!');
+      res.status(HttpStatusCode.Ok).send('Hello, World!');
     });
 
     // Use the micro-aid routes defined in microAidRoutes.ts
