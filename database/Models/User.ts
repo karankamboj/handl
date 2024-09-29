@@ -1,20 +1,20 @@
-import mongoose, { Document } from 'mongoose';
-import { IRequest, RequestSchema } from './Request';
-import { ISkill, SkillSchema } from './Skills';
+import mongoose, { Types } from 'mongoose';
+import { IRequest } from './Request';
+import { ISkill } from './Skills';
 
-export interface IUser extends Document {
+export interface IUser {
+  _id: Types.ObjectId;
   username: string;
   name: string;
   email: string;
-  password: string;
-  createdAt: Date;
-  skills: ISkill[];
-  requests: IRequest[];
+  createdAt: number;
+  skills?: ISkill[];
+  requests?: IRequest[];
 }
 
-export type ICreateUser = Pick<IUser, 'name' | 'email' | 'password'>;
+export type INewUser = Pick<IUser, 'username' | 'name' | 'email'>;
 
-export const UserSchema = new mongoose.Schema<IUser>({
+const UserSchema = new mongoose.Schema<IUser>({
   username: {
     type: String,
     required: true,
@@ -29,22 +29,24 @@ export const UserSchema = new mongoose.Schema<IUser>({
     type: String,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
   createdAt: {
-    type: Date,
+    type: Number,
     required: true
   },
-  skills: {
-    type: [SkillSchema],
-    required: false
-  },
-  requests: {
-    type: [RequestSchema],
-    required: false
-  }
+  skills: [
+    {
+      type: Types.ObjectId,
+      ref: 'skills',
+      default: []
+    }
+  ],
+  requests: [
+    {
+      type: Types.ObjectId,
+      ref: 'requests',
+      default: []
+    }
+  ]
 });
 
 export const User = mongoose.model<IUser>('users', UserSchema);

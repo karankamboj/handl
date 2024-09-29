@@ -1,16 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
+import { RequestStatus } from '../../library/Validators/Request';
 
 export interface IRequest {
+  _id: Types.ObjectId;
   title: string;
   description: string;
   status: string;
-  createdBy: string;
-  acceptedBy: string;
-  creationDate: Date;
-  acceptanceDate: Date;
+  createdBy: Types.ObjectId;
+  createdFor: Types.ObjectId;
+  creationDate: number;
+  acceptanceDate: number;
 }
 
-export const RequestSchema = new mongoose.Schema<IRequest>({
+export type INewRequest = Pick<
+  IRequest,
+  'title' | 'description' | 'status' | 'createdBy' | 'createdFor'
+>;
+
+const RequestSchema = new mongoose.Schema<IRequest>({
   title: {
     type: String,
     required: true
@@ -21,22 +28,23 @@ export const RequestSchema = new mongoose.Schema<IRequest>({
   },
   status: {
     type: String,
+    enum: Object.values(RequestStatus),
     required: true
   },
   createdBy: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
-  acceptedBy: {
-    type: String,
-    required: false
+  createdFor: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   },
   creationDate: {
-    type: Date,
+    type: Number,
     required: true
   },
   acceptanceDate: {
-    type: Date,
+    type: Number,
     required: false
   }
 });
