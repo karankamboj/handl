@@ -1,10 +1,19 @@
 import { Request, Response } from 'express';
 import { addRequest, getAllRequests, acceptAidRequest } from '../services/microAidService';
+import { emailService } from '../services/emailService';
 
 // Controller to handle creating a new micro-aid request
 export const createRequest = (req: Request, res: Response) => {
   const { description, location, username } = req.body; // Input from the request body
   const newRequest = addRequest({ description, location, username });
+  try {
+    const to = "karankamboj289@gmail.com"
+    const subject = "New Request Arrived"
+    const html = "<html><body>Description: "+description+" Location: "+location+" by Username:"+username+"</body></html>"
+    emailService.sendMail(to, subject, html);
+  } catch (error) {
+    console.log("Failed to send the email")
+  }
   res.status(201).json(newRequest);
 };
 

@@ -4,8 +4,8 @@ import { register, login, getUserSkills } from '../services/authService';
 // Controller to handle user registration
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { username, password, skills } = req.body; // Get user details from request body
-    const newUser = await register(username, password, skills);
+    const { username, password, skills, email } = req.body; // Get user details from request body
+    const newUser = await register(username, password, skills, email);
     res.status(201).json(newUser);
   } catch (error) {
     if (error instanceof Error) {

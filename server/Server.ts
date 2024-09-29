@@ -3,6 +3,7 @@ import { Globals } from '../library/Globals/Globals';
 import { LoggerUtils } from '../library/Utilities/LoggerUtils';
 import microAidRoutes from './routes/microAidRoutes';
 import authRoutes from './routes/authRoutes'; // Import auth routes
+import emailRoutes from './routes/emailRoutes';
 
 
 export class Server {
@@ -30,6 +31,9 @@ export class Server {
     this.app.use('/api/microaid', microAidRoutes);
 
     this.app.use('/api/auth', authRoutes); // Link to authentication routes
+
+    // Use the email routes under /api/email
+    this.app.use('/api/email', emailRoutes);
 
   }
 

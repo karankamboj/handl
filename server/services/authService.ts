@@ -3,6 +3,7 @@ import { PasswordService } from './passwordService'; // Adjust the path as neces
 interface User {
     id: string;
     username: string;
+    email: string;
     hashedPassword: string; // In production, this should be hashed
     skills: string[]; // Add a list of skills
 }
@@ -11,7 +12,7 @@ let users: User[] = []; // In-memory store for users
 const passwordService = new PasswordService(); 
 
 // Service to handle user registration
-export const register = async (username: string, password: string, skills: string[]): Promise<User> => {
+export const register = async (username: string, password: string, skills: string[], email: string): Promise<User> => {
     // Check if the user already exists
     const existingUser = users.find(user => user.username === username);
     if (existingUser) {
@@ -22,6 +23,7 @@ export const register = async (username: string, password: string, skills: strin
     const newUser: User = {
             id: (users.length + 1).toString(),
             username,
+            email,
             hashedPassword, // Store plain password for demonstration (hash in production)
             skills, // Store the skills array
         };
