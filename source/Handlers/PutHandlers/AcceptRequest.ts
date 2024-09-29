@@ -2,12 +2,14 @@ import { RequestCRUD } from '../../../database/Middleware/Request';
 import { UserCRUD } from '../../../database/Middleware/User';
 import { Catchable } from '../../../library/Decorators/Catchable';
 import { Checkable } from '../../../library/Decorators/Checkable';
+import { MissingHeaders } from '../../../library/Errors/Params';
 import {
   Handler,
   IHasChecks,
   ServerEvent
 } from '../../../library/Interfaces/HandlerController';
 import { RequestStatus } from '../../../library/Validators/Request';
+import { sendRequestAcceptedEmail } from '../../Middleware/Email';
 
 @Checkable
 export class AcceptRequest extends Handler<ServerEvent> implements IHasChecks {
@@ -16,11 +18,11 @@ export class AcceptRequest extends Handler<ServerEvent> implements IHasChecks {
   }
 
   checkHeaders(): void {
-    const requiredHeaders = ['username'];
+    const requiredHeaders = ['requestId'];
 
     requiredHeaders.forEach((header) => {
       if (!this.event.req.headers[header]) {
-        throw new Error(`${header} not provided`);
+        throw new MissingHeaders(`${header} not provided`, [header]);
       }
     });
   }
@@ -36,14 +38,22 @@ export class AcceptRequest extends Handler<ServerEvent> implements IHasChecks {
 
   @Catchable()
   async execute(): Promise<void> {
-    const username = this.event.req.headers.username as string;
-    const user = await UserCRUD.getUserByUsername(username);
+    const reqId = this.event.req.headers.requestId as string;
 
-    await RequestCRUD.updateRequestStatus(
-      user!._id.toString(),
+    const req = await RequestCRUD.updateRequestStatus(
+      reqId,
       RequestStatus.ACCEPTED
     );
+    const receiver = await UserCRUD.getUserById(req!.createdFor.toString());
 
     this.event.res.status(200).send('Request accepted');
+
+    await sendRequestAcceptedEmail(
+      receiver!.name,
+      receiver!.email,
+      req!.title,
+      req!.description,
+      new Date().toDateString()
+    );
   }
 }

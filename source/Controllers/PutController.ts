@@ -8,7 +8,7 @@ import { AcceptRequest } from '../Handlers/PutHandlers/AcceptRequest';
 import { DenyRequest } from '../Handlers/PutHandlers/DenyRequest';
 import { UpdateUser } from '../Handlers/PutHandlers/UpdateUser';
 
-export class UpdateController extends Controller<ServerEvent> {
+export class PutController extends Controller<ServerEvent> {
   private routeId: ValidRoutes;
 
   constructor(event: ServerEvent) {

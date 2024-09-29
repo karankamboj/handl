@@ -94,3 +94,5 @@ export abstract class Controller<T extends ValidEventTypes> {
 export type HandlerController<T extends ValidEventTypes> =
   | Handler<T>
   | Controller<T>;
+
+export type ControllerChild = new (...args: any[]) => Controller<ServerEvent>;

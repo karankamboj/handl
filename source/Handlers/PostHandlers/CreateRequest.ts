@@ -10,6 +10,7 @@ import {
   ServerEvent
 } from '../../../library/Interfaces/HandlerController';
 import { StringUtils } from '../../../library/Utilities/StringUtils';
+import { sendNewRequestEmail } from '../../Middleware/Email';
 
 // required headers: sender, receiver, title, description
 
@@ -58,8 +59,18 @@ export class CreateRequest extends Handler<ServerEvent> implements IHasChecks {
       description: this.event.req.headers.description as string
     };
 
-    const user = await RequestCRUD.createRequest(request);
+    const req = await RequestCRUD.createRequest(request);
+    const user = await UserCRUD.getUserById(req.createdFor.toString());
 
-    this.event.res.status(200).send(user);
+    this.event.res.status(200).send(req);
+
+    await sendNewRequestEmail(
+      user!.name,
+      user!.email,
+      req.title,
+      req.description,
+      this.event.req.headers.sender as string,
+      new Date().toLocaleString()
+    );
   }
 }

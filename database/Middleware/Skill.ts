@@ -1,6 +1,7 @@
 import { DBCatchable } from '../../library/Decorators/DBCatchable';
 import { INewSkill, ISkill } from '../Models/Skills';
 import Skill from '../Models/Skills';
+import User, { IUser } from '../Models/User';
 
 export class SkillCRUD {
   @DBCatchable('Error creating skill')
@@ -33,5 +34,16 @@ export class SkillCRUD {
     const skillExists = await Skill.exists({ name: skill });
 
     return !!skillExists;
+  }
+
+  @DBCatchable('Error getting users by skill')
+  public static async getUsersBySkill(skill: string): Promise<IUser[]> {
+    const users = await User.find({ skills: { $in: [skill] } });
+
+    if (!users) {
+      return [];
+    }
+
+    return users;
   }
 }

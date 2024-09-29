@@ -7,6 +7,8 @@ export enum ValidRoutes {
   GetSkills = 'getSkills', // Get
   CreateSkill = 'addNewSkill', // Post
   GetUsers = 'getUsers', // Get
+  GetUser = 'getUser', // Get
+  GetUsersBySkill = 'getUsersBySkill', // Get
   CreateUser = 'createUser', // Post
   UpdateUser = 'updateUser' // Update
 }

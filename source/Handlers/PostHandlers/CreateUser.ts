@@ -65,8 +65,6 @@ export class CreateUser extends Handler<ServerEvent> implements IHasChecks {
   private checkName(): void {
     const name = this.event.req.headers.name;
 
-    console.log(name);
-
     if (!name) {
       throw new MissingHeaders('Name not provided', ['name']);
     }
