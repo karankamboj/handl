@@ -1,4 +1,3 @@
-import { Logger } from 'winston';
 import { UserCRUD } from '../../../database/Middleware/User';
 import { IUser } from '../../../database/Models/User';
 import { Catchable } from '../../../library/Decorators/Catchable';
@@ -10,7 +9,6 @@ import {
   IHasChecks,
   ServerEvent
 } from '../../../library/Interfaces/HandlerController';
-import { LoggerUtils } from '../../../library/Utilities/LoggerUtils';
 
 @Checkable
 export class GetUser extends Handler<ServerEvent> implements IHasChecks {
