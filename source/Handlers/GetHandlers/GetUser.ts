@@ -47,8 +47,6 @@ export class GetUser extends Handler<ServerEvent> implements IHasChecks {
       this.event.req.headers.username as string
     )) as IUser;
 
-    console.log(user);
-
     this.event.res.status(200).send(user);
   }
 }

@@ -18,13 +18,9 @@ export class DenyRequest extends Handler<ServerEvent> implements IHasChecks {
   }
 
   checkHeaders(): void {
-    const requiredHeaders = ['requestId'];
-
-    requiredHeaders.forEach((header) => {
-      if (!this.event.req.headers[header]) {
-        throw new MissingHeaders(`${header} not provided`, [header]);
-      }
-    });
+    if (!this.event.req.headers.request_id) {
+      throw new MissingHeaders('Request ID not provided', ['request_id']);
+    }
   }
 
   @Catchable()
@@ -38,7 +34,7 @@ export class DenyRequest extends Handler<ServerEvent> implements IHasChecks {
 
   @Catchable()
   async execute(): Promise<void> {
-    const reqId = this.event.req.headers.requestId as string;
+    const reqId = this.event.req.headers.request_id as string;
 
     const req = await RequestCRUD.updateRequestStatus(
       reqId,
